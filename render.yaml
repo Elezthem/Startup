@@ -8,3 +8,7 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 24.16.0
+    disk:
+      name: unibox-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
