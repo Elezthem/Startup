@@ -4,11 +4,18 @@ async function request(path, options = {}) {
     ...options,
   });
   const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || "API request failed.");
+  if (!response.ok) throw new Error(payload.error || "Не вдалося виконати API-запит.");
   return payload.data;
 }
 
 export const api = {
+  register: (account) => request("/auth/register", { method: "POST", body: JSON.stringify(account) }),
+  login: (credentials) => request("/auth/login", { method: "POST", body: JSON.stringify(credentials) }),
+  getTeacherOverview: (teacherId) => request(`/teacher/overview?teacherId=${encodeURIComponent(teacherId)}`),
+  activateTeacherSubscription: (teacherId) => request("/teacher/subscription/activate", { method: "POST", body: JSON.stringify({ teacherId }) }),
+  assignLaboratory: (assignment) => request("/teacher/assignments", { method: "POST", body: JSON.stringify(assignment) }),
+  getStudentAssignments: (userId) => request(`/student/assignments?userId=${encodeURIComponent(userId)}`),
+  updateStudentLiveSession: (session) => request("/student/live-session", { method: "POST", body: JSON.stringify(session) }),
   listLaboratories: () => request("/labs"),
   getLaboratory: (id) => request(`/labs/${id}`),
   startLaboratory: (laboratoryId, userId) => request(`/labs/${laboratoryId}/start`, { method: "POST", body: JSON.stringify({ userId }) }),

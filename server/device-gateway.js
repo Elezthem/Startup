@@ -29,10 +29,10 @@ export class DeviceGateway {
 
   receive(payload, source = "esp32") {
     if (!payload || typeof payload.deviceId !== "string" || typeof payload.sensor !== "string" || !Number.isFinite(payload.value)) {
-      throw new Error("deviceId, sensor and numeric value are required.");
+      throw new Error("Потрібні deviceId, сенсор і числове значення.");
     }
     const device = this.db.prepare("SELECT id FROM devices WHERE esp32_id = ?").get(payload.deviceId);
-    if (!device) throw new Error("Unknown device ID.");
+    if (!device) throw new Error("Ідентифікатор пристрою не знайдено.");
     const reading = { id: randomUUID(), deviceId: device.id, deviceIdExternal: payload.deviceId, sensor: payload.sensor, value: payload.value, timestamp: payload.timestamp || new Date().toISOString(), source };
     this.db.prepare("INSERT INTO device_readings (id, device_id, sensor, value, timestamp, source) VALUES (?, ?, ?, ?, ?, ?)").run(reading.id, reading.deviceId, reading.sensor, reading.value, reading.timestamp, source);
     this.db.prepare("UPDATE devices SET status = ?, last_seen = ? WHERE id = ?").run("online", reading.timestamp, device.id);

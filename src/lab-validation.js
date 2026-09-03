@@ -2,12 +2,12 @@ import { sensorCircuitDefinition } from "./simulator.js";
 
 export const sensorLabDefinition = {
   id: "sensor-lab",
-  title: "Laboratory work No. 1 - Sensor connection",
+  title: "Лабораторна робота №1 — Підключення сенсора",
   requiredComponents: ["esp32", "sensor", "power", "ground"],
   requiredConnections: sensorCircuitDefinition.requiredConnections,
   expectedMeasurements: { key: "sensorValue", unit: "%", target: 50, min: 45, max: 55 },
   tolerance: 5,
-  tasks: ["Connect the sensor to ESP32 and read its value."],
+  tasks: ["Підключіть сенсор до ESP32 та зчитайте його значення."],
   passingConditions: ["circuitCorrect", "measurementAvailable", "measurementCorrect"],
 };
 
@@ -44,9 +44,9 @@ export function evaluateLaboratory(definition, snapshot) {
   else if (!measurementCorrect) feedback.push(`Отримане значення не відповідає заданому діапазону ${range.min}-${range.max}${range.unit}.`);
   if (circuitCorrect && measurementCorrect) feedback.push("Схема та вимірювання відповідають усім умовам лабораторної.");
   const checks = {
-    circuit: { passed: circuitCorrect, label: circuitCorrect ? "Correct" : "Needs correction" },
-    measurement: { passed: measurementCorrect, label: measurementCorrect ? "Correct" : measurementAvailable ? "Out of range" : "Not received" },
-    task: { passed: circuitCorrect && measurementCorrect, label: circuitCorrect && measurementCorrect ? "Completed" : "Not completed" },
+    circuit: { passed: circuitCorrect, label: circuitCorrect ? "Правильно" : "Потрібне виправлення" },
+    measurement: { passed: measurementCorrect, label: measurementCorrect ? "Правильно" : measurementAvailable ? "Поза діапазоном" : "Не отримано" },
+    task: { passed: circuitCorrect && measurementCorrect, label: circuitCorrect && measurementCorrect ? "Виконано" : "Не виконано" },
   };
   const passed = definition.passingConditions.every((condition) => ({ circuitCorrect, measurementAvailable, measurementCorrect })[condition]);
   return { labId: definition.id, passed, score: [circuitCorrect, measurementAvailable, measurementCorrect].filter(Boolean).length * 33 + (passed ? 1 : 0), checks, measurement: measurementAvailable ? { value: measurement, unit: range.unit, expected: `${range.min}-${range.max}${range.unit}`, tolerance: definition.tolerance } : null, feedback, evaluatedAt: new Date().toISOString() };
