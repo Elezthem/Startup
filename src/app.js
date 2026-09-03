@@ -39,6 +39,7 @@ let teacherOverview = null;
 let studentAssignments = [];
 let lastLiveSessionSignature = "";
 let publicScreen = "landing";
+let theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 
 function readStoredUser() {
   try { return JSON.parse(window.localStorage.getItem("unibox-user")); } catch { return null; }
@@ -61,16 +62,16 @@ export function createApp(root) {
     const path = currentRoutePath();
     const route = resolveRoute(path);
     if (!currentUser) {
-      root.innerHTML = publicScreen === "auth" ? authView({ mode: authMode, error: authError, pending: authPending }) : landingView();
+      root.innerHTML = `${themeToggleView()}${publicScreen === "auth" ? authView({ mode: authMode, error: authError, pending: authPending }) : landingView()}`;
       bindEvents();
       return;
     }
     const isTeacher = currentUser.role === "teacher";
-    root.innerHTML = shellLayout({
+    root.innerHTML = `${themeToggleView()}${shellLayout({
       currentPath: path,
       user: currentUser,
       content: isTeacher ? teacherDashboardView(teacherOverview || {}, currentUser) : `${backendNotice()}${route.render()}`,
-    });
+    })}`;
     bindEvents();
     if (!isTeacher) {
       bindSimulator(root, render);
@@ -79,6 +80,12 @@ export function createApp(root) {
   }
 
   function bindEvents() {
+    root.querySelector('[data-action="toggle-theme"]')?.addEventListener("click", () => {
+      theme = theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = theme;
+      window.localStorage.setItem("unibox-theme", theme);
+      render();
+    });
     const landingLogin = root.querySelector(".landing-nav .landing-login");
     if (landingLogin) {
       const registerButton = document.createElement("button");
@@ -383,6 +390,11 @@ export function createApp(root) {
     if (backendState === "loading") return `<div class="app-notice loading">Завантажуємо лабораторію та статус UniBox...</div>`;
     if (backendState === "offline") return `<div class="app-notice error">Сервер недоступний. Перевірте локальний сервер UniBox і повторіть спробу.</div>`;
     return "";
+  }
+
+  function themeToggleView() {
+    const isDark = theme === "dark";
+    return `<button class="theme-toggle" data-action="toggle-theme" type="button" aria-label="${isDark ? "Увімкнути світлу тему" : "Увімкнути темну тему"}" title="${isDark ? "Світла тема" : "Темна тема"}"><span aria-hidden="true">${isDark ? "☀" : "◐"}</span><b>${isDark ? "Світла" : "Темна"}</b></button>`;
   }
 
   function connectDeviceStream() {
