@@ -50,11 +50,11 @@ export function authView({ mode = "register", error = "", pending = false } = {}
 
 export function landingView(themeToggle = "") {
   return `<main class="landing-page">
+    <div class="landing-nav">
+      <div class="auth-brand"><div class="brand-mark">U</div><div><span>SMART LAB PLATFORM</span><h1>UniBox</h1></div></div>
+      <div class="landing-nav-actions">${themeToggle}<button class="landing-login" data-action="show-auth" data-auth-mode="login">Увійти</button></div>
+    </div>
     <section class="landing-hero">
-      <div class="landing-nav">
-        <div class="auth-brand"><div class="brand-mark">U</div><div><span>SMART LAB PLATFORM</span><h1>UniBox</h1></div></div>
-        <div class="landing-nav-actions">${themeToggle}<button class="landing-login" data-action="show-auth" data-auth-mode="login">Увійти</button></div>
-      </div>
       <div class="landing-copy">
         <span class="landing-kicker">Інтерактивна IoT-лабораторія</span>
         <h2>Від першої схеми до впевненого експерименту</h2>

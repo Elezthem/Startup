@@ -745,6 +745,30 @@ button {
   animation: reveal-down 650ms 100ms ease both;
 }
 
+/* Keep the landing controls available while the visitor explores the page. */
+#app:has(.landing-page) .landing-nav {
+  position: fixed;
+  z-index: 40;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 16px clamp(24px, 7vw, 112px);
+  border-bottom: 1px solid rgba(173, 222, 226, .16);
+  background: rgba(10, 27, 43, .84);
+  box-shadow: 0 10px 28px rgba(3, 13, 24, .2);
+  backdrop-filter: blur(16px);
+}
+
+html[data-theme="light"] #app:has(.landing-page) .landing-nav {
+  border-bottom-color: rgba(103, 153, 179, .22);
+  background: rgba(244, 251, 253, .88);
+  box-shadow: 0 10px 28px rgba(50, 92, 115, .12);
+}
+
+@media (max-width: 640px) {
+  #app:has(.landing-page) .landing-nav { padding: 12px 18px; }
+}
+
 .landing-kicker {
   display: inline-flex;
   align-items: center;
