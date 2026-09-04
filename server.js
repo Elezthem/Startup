@@ -8,7 +8,7 @@ import { DeviceGateway } from "./server/device-gateway.js";
 
 const rootDir = fileURLToPath(new URL(".", import.meta.url));
 const port = Number(process.env.PORT || 4173);
-const mimeTypes = { ".html": "text/html; charset=utf-8", ".js": "application/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
+const mimeTypes = { ".html": "text/html; charset=utf-8", ".js": "application/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".svg": "image/svg+xml" };
 const deviceGateway = new DeviceGateway(db);
 const json = (res, status, data) => { res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" }); res.end(JSON.stringify(data)); };
 const fail = (res, status, message) => json(res, status, { error: message });

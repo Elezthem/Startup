@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">UniBox</title>
+  <defs>
+    <linearGradient id="surface" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1c98af"/>
+      <stop offset="1" stop-color="#1358a5"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#surface)"/>
+  <path d="M17 19h8v17c0 6.1 2.6 9.1 7 9.1s7-3 7-9.1V19h8v17.6C47 47.7 41.2 53 32 53s-15-5.3-15-16.4V19Z" fill="#f5fffe"/>
+  <path d="m38.5 12-8 17.6h6.6L33.6 42 45 23.9h-6.7L42.7 12h-4.2Z" fill="#67e7d6"/>
+</svg>

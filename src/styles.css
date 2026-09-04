@@ -160,6 +160,8 @@ button {
   font-weight: 700;
 }
 
+.brand-mark { background: url("./assets/unibox-logo.svg") center / contain no-repeat; color: transparent; }
+
 .brand-block h1,
 .page-header h2,
 .hero-card h2,
