@@ -1,9 +1,15 @@
 async function request(path, options = {}) {
-  const response = await fetch(`${window.UNIBOX_API_BASE || ""}/api${path}`, {
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options,
-  });
-  const payload = await response.json();
+  let response;
+  try {
+    response = await fetch(`${window.UNIBOX_API_BASE || ""}/api${path}`, {
+      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      ...options,
+    });
+  } catch {
+    const target = window.UNIBOX_API_BASE ? "віддаленим сервером" : "локальним сервером";
+    throw new Error(`Не вдалося підключитися до сервера. Перевірте з'єднання з ${target} і повторіть спробу.`);
+  }
+  const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.error || "Не вдалося виконати API-запит.");
   return payload.data;
 }

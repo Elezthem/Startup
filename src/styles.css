@@ -73,7 +73,8 @@ body {
 
 .theme-toggle { position: fixed; z-index: 30; top: 18px; right: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-strong); box-shadow: 0 10px 28px rgba(12, 31, 52, .18); color: var(--text); cursor: pointer; font-size: .76rem; font-weight: 800; transition: transform 180ms ease, background 180ms ease; }
 .theme-toggle:hover { background: var(--surface); transform: translateY(-2px); }.theme-toggle span { display: grid; width: 20px; height: 20px; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #15d1c3, #1178ff); color: white; font-size: .9rem; }
-#app:has(.landing-page) .theme-toggle { right: clamp(160px, 17vw, 250px); border-color: rgba(224, 244, 247, .35); background: rgba(13, 28, 45, .84); color: #eaf7f7; }
+#app:has(.landing-page) .theme-toggle { top: 50%; right: 20px; transform: translateY(-50%); border-color: rgba(224, 244, 247, .35); background: rgba(13, 28, 45, .84); color: #eaf7f7; }
+#app:has(.landing-page) .theme-toggle:hover { transform: translateY(calc(-50% - 2px)); }
 
 html[data-theme="dark"] body { background: radial-gradient(circle at top left, rgba(38, 118, 211, .2), transparent 28%), radial-gradient(circle at bottom right, rgba(25, 176, 157, .12), transparent 25%), var(--bg); }
 html[data-theme="dark"] .content-area { background-color: transparent; }
@@ -1507,7 +1508,8 @@ button {
   }
 
   .theme-toggle { top: 12px; right: 12px; padding: 9px 11px; }.theme-toggle b { display: none; }
-  #app:has(.landing-page) .theme-toggle { right: 112px; }
+  #app:has(.landing-page) .theme-toggle { top: auto; right: 12px; bottom: 18px; transform: none; }
+  #app:has(.landing-page) .theme-toggle:hover { transform: translateY(-2px); }
 }
 
 @media (max-width: 640px) {
