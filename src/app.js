@@ -62,7 +62,9 @@ export function createApp(root) {
     const path = currentRoutePath();
     const route = resolveRoute(path);
     if (!currentUser) {
-      root.innerHTML = `${themeToggleView()}${publicScreen === "auth" ? authView({ mode: authMode, error: authError, pending: authPending }) : landingView()}`;
+      root.innerHTML = publicScreen === "auth"
+        ? `${themeToggleView()}${authView({ mode: authMode, error: authError, pending: authPending })}`
+        : landingView(themeToggleView());
       bindEvents();
       return;
     }
